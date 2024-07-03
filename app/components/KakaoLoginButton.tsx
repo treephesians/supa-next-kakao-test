@@ -14,7 +14,7 @@ const KakaoLoginButton = () => {
   //   const { data } = await signInKakao();
   // };
   // const [user, setUser] = useState<User | null>(null);
-  const [name, setName] = useState<string | null>(null);
+  const [name, setName] = useState(false);
   const isMount = useHydrate();
 
   const getUserInfo = async () => {
@@ -22,12 +22,13 @@ const KakaoLoginButton = () => {
     const name = result.data.user?.user_metadata.name;
     // name 이 아니라 user을 받아야 하는데 DataType을 추가해줘야 하는듯
     //if (result?.data?.user) setUser(result?.data?.user);
+    //name으로 했는데 user로 해야 진짜 logout이 됐는지 알 수 있음
     if (name) setName(name);
   };
 
   const handleLogout = async () => {
     supabase.auth.signOut();
-    setName(null);
+    setName(false);
     window.location.reload();
   };
 
